@@ -1,0 +1,19 @@
+  
+body{
+  background: #466368;
+  background: linear-gradient(#ff99e6, #003399);
+  border-radius:6px;
+  height: 1000px;
+}
+h1{
+	color: #000000;
+	font-size: 50px;
+	font-family: "Arial Black", serif;
+	border-style: dotted;
+	text-align: center;
+	
+}
+
+img{
+	margin-left: 32.5%;
+}
