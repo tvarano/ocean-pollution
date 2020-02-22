@@ -32,8 +32,8 @@ def get_zone_data(zone, month, year):
 	conn.close()
 	return res
 
-print(get_month_data(5, 2019))
-print(get_zone_data('Kings County, Brooklyn, NY, USA', 5, 2019))
+# print(get_month_data(5, 2019))
+# print(get_zone_data('Kings County, Brooklyn, NY, USA', 5, 2019))
 
  
 

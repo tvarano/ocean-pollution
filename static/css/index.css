@@ -1,23 +1,19 @@
+
+/* Always set the map height explicitly to define the size of the div * element that contains the map. */
+#map { height: 100vh; }
+/* Optional: Makes the sample page fill the window. */
+html, body { height: 100%; margin: 0; padding: 0; }
   
 body{
     background: #466368;
-    background: linear-gradient(#ff99e6, #003399);
     border-radius:6px;
     height: 1000px;
-  }
-  h1{
-      color: #000000;
-      font-size: 50px;
-      font-family: "Arial Black", serif;
-      border-style: dotted;
-      text-align: center;
-      
   }
   
   img{
       margin-left: 32.5%;
   }
-/* Always set the map height explicitly to define the size of the div * element that contains the map. */
-#map { height: 100vh; }
-/* Optional: Makes the sample page fill the window. */
-html, body { height: 100%; margin: 0; padding: 0; }
+
+  #date-form {
+      background: white;
+  }
