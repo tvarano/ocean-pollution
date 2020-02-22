@@ -27,16 +27,23 @@ def get_months_data():
 	conn.close()
 	return res
 
-def get_month_data(month, year, filters=None):
+def get_month_data(month=None, year=None, filters=None):
 	conn, curs = init()
-	rows = curs.execute('select zone, sum(Total_Items_Collected), sum(Miles), sum(Pounds), avg(Lat), avg(Long), sum(People), sum(Adults) from cleanup where Month=? and Year=? group by Zone order by Total_Items_Collected DESC', (month, year))
+	if month != None and year != None:
+		rows = curs.execute('select zone, sum(Total_Items_Collected), sum(Miles), sum(Pounds), avg(Lat), avg(Long), sum(People), sum(Adults) from cleanup where Month=? and Year=? group by Zone order by Total_Items_Collected DESC', (month, year))
+	else:
+		rows = curs.execute('select zone, sum(Total_Items_Collected), sum(Miles), sum(Pounds), avg(Lat), avg(Long), sum(People), sum(Adults) from cleanup group by Zone order by Total_Items_Collected DESC')
 	res = {r[0]: {"num_items": r[1], "pounds/mile": get_dense(r[3], r[2]), "lat":r[4], "lng": r[5], "pounds/people": get_dense(r[3], r[6]), "pounds/adults": get_dense(r[3], r[7])} for r in rows} 
 	conn.close()
 	return res
 
-def get_zone_data(zone, month, year, filters=None):
+def get_zone_data(zone, month=None, year=None, filters=None):
 	conn, curs = init()
-	rows = curs.execute('select Cleanup_ID, sum(Total_Items_Collected), sum(Miles), sum(Pounds), Lat, Long, sum(People), sum(Adults) from cleanup where zone= ? and Month=? and Year=? group by lat, long order by Total_Items_Collected DESC', (zone, month, year))
+	if month != None and year != None:
+		rows = curs.execute('select Cleanup_ID, sum(Total_Items_Collected), sum(Miles), sum(Pounds), Lat, Long, sum(People), sum(Adults) from cleanup where zone=? and Month=? and Year=? group by lat, long order by Total_Items_Collected DESC', (zone, month, year))
+	else:
+		rows = curs.execute('select Cleanup_ID, sum(Total_Items_Collected), sum(Miles), sum(Pounds), Lat, Long, sum(People), sum(Adults) from cleanup where zone=? group by lat, long order by Total_Items_Collected DESC', (zone,))
+		
 	res = {r[0]: {"num_items": r[1], "desnity": get_dense(r[3], r[2]), "lat": r[4], "lng": r[5], "pounds/people": get_dense(r[3], r[6]), "pounds/adults": get_dense(r[3], r[7])} for r in rows}
 	conn.close()
 	return res
@@ -46,6 +53,7 @@ if __name__ == '__main__':
 	print(get_months_data(), end="\n\n")
 	print(get_month_data(5, 2019), end="\n\n")
 	print(get_zone_data('Kings County, Brooklyn, NY, USA', 5, 2019), end="\n\n")
+	print(get_zone_data('Kings County, Brooklyn, NY, USA'), end="\n\n")
 
  
 
