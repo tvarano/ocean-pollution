@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <link href="heatmaps.css" rel= "stylesheet">
+    <title>DATA SQUAD</title>
+    <link href="style.css" rel="stylesheet">
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA3sUdLWg8NfWltFW3edZz9Yk2Q1yE5fxM&libraries=visualization"> </script>
+  </head>
+
+  <body onload=initMap();>
+    <div  id="map" style="position: fixed;"></div>
+    <div id="floating-panel"> <button onclick="toggleHeatmap()">Toggle Heatmap</button> <button onclick="changeGradient()">Change gradient</button> <button onclick="changeRadius()">Change radius</button> <button onclick="changeOpacity()">Change opacity</button> </div>
+    <div id = "form">
+      <p>Enter names in the fields, then click "Submit" to submit the form:</p>
+
+      <form id="frm1" action="/action_page.php">
+        Month: <input type="integer" name="month"><br>
+        Year: <input type="text" name="year"><br><br>
+        <button onclick="myFunction()">Submit</button>
+    </form>
+
+    </div>
+  
+  </body>
+
+
+<script>
+
+var map, heatmap;
+var schools= [];
+schools.push({lat:39.961024, long: -75.162782, percent: 13.64});
+schools.push({lat: 39.990484, long: -75.184086, percent: 45.52});
+schools.push({lat: 39.777748, long: -74.966211, percent: 50.33});
+schools.push({lat: 40.011874, long: -75.129507, percent: 51.17});
+schools.push({lat: 39.963589, long: -75.162017, percent: 52.58});
+schools.push({lat: 39.923701, long: -75.168779, percent: 55.18});
+schools.push({lat: 39.984303, long: -75.126329, percent: 55.67});
+schools.push({lat: 39.9574, long: -75.238791, percent: 58.14});
+schools.push({lat: 40.021596, long: -75.085286, percent: 59.01});
+schools.push({lat: 39.958089, long: -75.219488, percent: 63.29});
+schools.push({lat: 40.055832, long: -75.16074, percent: 65.49});
+schools.push({lat: 40.04414, long: -75.042487, percent: 66.39});
+schools.push({lat: 39.921986, long: -75.233707, percent: 66.13});
+schools.push({lat: 39.984303, long: -75.126329, percent: 67.74});
+schools.push({lat: 39.984561, long: -75.12834, percent: 67.74});
+schools.push({lat: 39.923522, long: -75.150844, percent: 67.78});
+schools.push({lat: 40.036458, long: -75.092485, percent: 71.12});
+schools.push({lat: 40.036727, long: -75.146512, percent: 72.73});
+schools.push({lat: 39.972827, long: -75.127868, percent: 73.17});
+schools.push({lat: 40.037329, long: -75.223065, percent: 74.40});
+schools.push({lat: 40.056694, long: -75.069145, percent: 74.57});
+schools.push({lat: 40.105706, long: -75.027139, percent: 74.95});
+schools.push({lat: 39.977814, long: -75.133367, percent: 75.00});
+schools.push({lat: 39.99532, long: -75.105978, percent: 81.18});
+schools.push({lat: 39.975334, long: -75.203197, percent: 82.35});
+schools.push({lat: 39.995108, long: -75.166577, percent: 84.44});
+schools.push({lat: 39.965088, long: -75.163095, percent: 85.71});
+schools.push({lat: 38.623091, long: -90.534202, percent: 87.91});
+schools.push({lat: 40.008613, long: -75.179677, percent: 89.47});
+schools.push({lat: 39.944298, long: -75.242326, percent: 90.77});
+schools.push({lat: 39.985854, long: -75.154346, percent: 93.44});
+schools.push({lat: 40.038492, long: -75.146019, percent: 94.17});
+schools.push({lat:39.968204, long: -75.143079, percent: 94.29});
+schools.push({lat: 40.092009, long: -75.014044, percent: 94.41});
+schools.push({lat: 39.939963, long: -75.161103, percent: 94.55});
+schools.push({lat: 39.939394, long: -75.165266, percent: 95.88});
+schools.push({lat: 39.962942, long: -75.159463, percent: 96.23});
+schools.push({lat: 39.950253, long: -75.152409, percent: 96.43});
+schools.push({lat: 34.7368, long: -92.298687, percent: 96.93});
+schools.push({lat:40.05634, long: -75.165356, percent: 97.26});
+schools.push({lat: 40.082643, long: -75.165356, percent: 97.54});
+schools.push({lat: 39.955736, long: -75.176133, percent: 97.58});
+schools.push({lat: 39.983254, long: -75.161104, percent: 97.70});
+schools.push({lat: 40.062294, long: -75.252651, percent: 97.75});
+schools.push({lat: 40.049455, long: -75.221315, percent: 97.92});
+schools.push({lat: 39.921693, long: -75.183129, percent: 98.39});
+schools.push({lat: 39.957001, long: -75.206013, percent: 98.48});
+schools.push({lat: 39.963419, long: -75.16572, percent: 98.97});
+
+
+function initMap() {
+  map = new google.maps.Map(document.getElementById('map'), {
+    zoom: 13,
+    center: {lat: 40, lng: -75.146},
+    mapTypeId: 'satellite'
+  });
+
+  heatmap = new google.maps.visualization.HeatmapLayer({
+    data: getPoints(),
+    map: map
+  });
+}
+
+function toggleHeatmap() {
+  heatmap.setMap(heatmap.getMap() ? null : map);
+}
+
+function changeGradient() {
+  var gradient = [
+    'rgba(0, 255, 255, 0)',
+    'rgba(0, 255, 255, 1)',
+    'rgba(0, 191, 255, 1)',
+    'rgba(0, 127, 255, 1)',
+    'rgba(0, 63, 255, 1)',
+    'rgba(0, 0, 255, 1)',
+    'rgba(0, 0, 223, 1)',
+    'rgba(0, 0, 191, 1)',
+    'rgba(0, 0, 159, 1)',
+    'rgba(0, 0, 127, 1)',
+    'rgba(63, 0, 91, 1)',
+    'rgba(127, 0, 63, 1)',
+    'rgba(191, 0, 31, 1)',
+    'rgba(255, 0, 0, 1)'
+  ]
+  heatmap.set('gradient', heatmap.get('gradient') ? null : gradient);
+}
+
+function changeRadius() {
+  heatmap.set('radius', heatmap.get('radius') ? null : 40);
+}
+
+function changeOpacity() {
+  heatmap.set('opacity', heatmap.get('opacity') ? null : 0.2);
+}
+
+
+// Heatmap data: 500 Points
+function getPoints() {
+console.log("hello");
+var points=[];
+  for(var i=0; i<schools.length; i++) {
+      //  alert(schools[i]);
+      var schoolpoints=[];
+    for (var j=0; j<schools[i].percent; j++) {
+      schoolpoints[j] = new google.maps.LatLng(schools[i].lat,schools[i].long);
+    }
+    points=points.concat(schoolpoints);
+    }
+   
+  return points;
+};
+function myFunction() {
+  var x = document.getElementById("frm1");
+}
+
+
+
+getPoints();
+
+
+
+</script>
+</html>
