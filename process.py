@@ -21,7 +21,7 @@ def get_months_data():
 def get_month_data(month, year):
 	conn, curs = init()
 	rows = curs.execute('select zone, sum(Total_Items_Collected), sum(Miles), sum(Pounds), avg(Lat), avg(Long) from cleanup where Month=? and Year=? group by Zone order by Total_Items_Collected DESC', (month, year))
-	res = [(r[0], r[1], get_dense(r[3], r[2]), r[4], r[5]) for r in rows] 
+	res = {r[0]: {"num_items": r[1], "density": get_dense(r[3], r[2]), "lat":r[4], "lng": r[5]} for r in rows} 
 	conn.close()
 	return res
 
