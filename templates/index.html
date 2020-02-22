@@ -6,8 +6,14 @@
     <body>
         <h1>Hello</h1>
         <section id="map-container">
+            <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA3sUdLWg8NfWltFW3edZz9Yk2Q1yE5fxM&libraries=visualization"> </script>
+            <script src="static/js/map.js"></script>
             <div id="map"></div>
             <div id=""></div>
+            <script>
+                fromJSON('{{ data }}')
+                initMap()
+            </script>
         </section>
         <section id="filter-container">
 
