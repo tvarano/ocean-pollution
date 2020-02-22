@@ -6,11 +6,9 @@ function toLatLng(lat, lng) {
 
 function fromJSON(json) {
     let input = JSON.parse(json.replace(/&#34;/g, '"'))
-    console.log(input)
     data = [];
     for (let i = 0; i < input.length; i++) {
-        data.push(toLatLng(input[i].lat, input[i].lng))
-        console.log(toLatLng(input[i].lat, input[i].lng))
+        data.push(toLatLng(input[i].lat, input[i].long))
     }
 }
 

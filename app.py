@@ -63,7 +63,6 @@ data = [DataPoint(39.961024, -75.162782, 13.64),
 
 @app.route("/")
 def home():
-    print(DataEncoder().encode(data))
     return render_template('index.html', data=(DataEncoder().encode(data)))
 
 
