@@ -1,5 +1,7 @@
 from flask import Flask, render_template
 from json import JSONEncoder
+from process import *
+
 app = Flask(__name__)
 
 class DataPoint: 
