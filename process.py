@@ -144,11 +144,11 @@ def analyze_month_data(month, year, filters=headers):
 	
 	filters = [f for f in filters if f in head_nums]
 	filters.append("Pounds")
-	cmd = sel_fil(filters, ["Zone"]) + " where Month=? and Year=? group by Zone order by Pounds"
+	cmd = sel_fil(filters, ["Zone", "avg(Lat)", "avg(Long)"]) + " where Month=? and Year=? group by Zone order by Pounds"
 	
 	rows = curs.execute(cmd, (month, year))
 	ind = len(filters)
-	res = {r[ind]: analyze_row(r, filters) for r in rows}
+	res = {r[ind]: {**analyze_row(r, filters), **{"Lat": r[ind+1], "Long": r[ind+2]}} for r in rows}
 
 	conn.close()
 	return res
@@ -158,11 +158,11 @@ def analyze_zone_data(zone, filters=headers):
 	
 	filters = [f for f in filters if f in head_nums]
 	filters.append("Pounds")
-	cmd = sel_fil(filters, ["Month", "Year"]) + " where Year >= 2010 and Year < 2020 and Zone=? group by Month, Year order by Pounds"
+	cmd = sel_fil(filters, ["Month", "Year", "avg(Lat)", "avg(Long)"]) + " where Year >= 2010 and Year < 2020 and Zone=? group by Month, Year order by Pounds"
 	
 	rows = curs.execute(cmd, (zone,))
 	ind = len(filters)
-	res = {(r[ind], r[ind+1]): analyze_row(r, filters) for r in rows}
+	res = {(r[ind], r[ind+1]): {**analyze_row(r, filters), **{"Lat": r[ind+2], "Long": r[ind+3]}} for r in rows}
 
 	conn.close()
 	return res
@@ -172,11 +172,11 @@ def analyze_zone_data_by_month(zone, month, year, filters=headers):
 	
 	filters = [f for f in filters if f in head_nums]
 	filters.append("Pounds")
-	cmd = sel_fil(filters, ["Cleanup_ID"]) + " where Year=? and Month=? and Zone=? group by Cleanup_ID order by Pounds"
+	cmd = sel_fil(filters, ["Lat", "Long"]) + " where Year=? and Month=? and Zone=? group by Lat, Long order by Pounds"
 	
 	rows = curs.execute(cmd, (year, month, zone))
 	ind = len(filters)
-	res = {r[ind]: analyze_row(r, filters) for r in rows}
+	res = {(r[ind], r[ind+1]): analyze_row(r, filters) for r in rows}
 
 	conn.close()
 	return res
