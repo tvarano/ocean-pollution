@@ -2,15 +2,48 @@
 <html>
     <head>
         <title>Landing</title>
-  <link href="static/css/index.css" rel="stylesheet">
+        <link href="static/css/index.css" rel="stylesheet">
+        <link rel="shortcut icon" href="/static/img/favicons/favicon.ico">
+        <link rel="icon" sizes="16x16 32x32 64x64" href="/static/img/favicons/favicon.ico">
+        <link rel="icon" type="image/png" sizes="196x196" href="/static/img/favicons/favicon-192.png">
+        <link rel="icon" type="image/png" sizes="160x160" href="/static/img/favicons/favicon-160.png">
+        <link rel="icon" type="image/png" sizes="96x96" href="/static/img/favicons/favicon-96.png">
+        <link rel="icon" type="image/png" sizes="64x64" href="/static/img/favicons/favicon-64.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="/static/img/favicons/favicon-32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/static/img/favicons/favicon-16.png">
+        <link rel="apple-touch-icon" href="/static/img/favicons/favicon-57.png">
+        <link rel="apple-touch-icon" sizes="114x114" href="/static/img/favicons/favicon-114.png">
+        <link rel="apple-touch-icon" sizes="72x72" href="/static/img/favicons/favicon-72.png">
+        <link rel="apple-touch-icon" sizes="144x144" href="/static/img/favicons/favicon-144.png">
+        <link rel="apple-touch-icon" sizes="60x60" href="/static/img/favicons/favicon-60.png">
+        <link rel="apple-touch-icon" sizes="120x120" href="/static/img/favicons/favicon-120.png">
+        <link rel="apple-touch-icon" sizes="76x76" href="/static/img/favicons/favicon-76.png">
+        <link rel="apple-touch-icon" sizes="152x152" href="/static/img/favicons/favicon-152.png">
+        <link rel="apple-touch-icon" sizes="180x180" href="/static/img/favicons/favicon-180.png">
+        <meta name="msapplication-TileColor" content="#FFFFFF">
+        <meta name="msapplication-TileImage" content="/static/img/favicons/favicon-144.png">
+        <meta name="msapplication-config" content="/browserconfig.xml">
     </head>
     <body>
-        <h1>Hello</h1>
+        <h1>Ocean Pollution Report</h1>
+        <h2>{{month}} / {{year}}</h2>
         <section id="map-container">
             <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA3sUdLWg8NfWltFW3edZz9Yk2Q1yE5fxM&libraries=visualization"> </script>
             <script src="static/js/map.js"></script>
             <div id="map"></div>
             <div id=""></div>
+            <div id = "form">
+                <p>Enter names in the fields, then click "Submit" to submit the form:</p>
+          
+                <form id="date-form" method=”POST”>
+                    <label for="month">Month:</label>
+                    <input type="integer" name="month"><br>
+                    <label for="year">Year:</label>
+                    <input type="text" name="year"><br><br>
+                    <input type="submit" value="Submit">
+                </form>
+          
+              </div>
             <script>
                 fromJSON('{{ data }}')
                 initMap()
