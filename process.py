@@ -54,4 +54,3 @@ if __name__ == '__main__':
 	print(get_month_data(5, 2019), end="\n\n")
 	print(get_zone_data('Kings County, Brooklyn, NY, USA', 5, 2019), end="\n\n")
 	print(get_zone_data('Kings County, Brooklyn, NY, USA'), end="\n\n")
-

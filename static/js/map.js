@@ -1,4 +1,6 @@
 let map, heatmap, data;
+let weightMetric = 0
+// 0 = count, 1 = weight, 2 = people, 3 = weight / person, 4 = weight /adult
 
 function toLatLng(lat, lng) {
     return new google.maps.LatLng(lat, lng);
@@ -9,6 +11,7 @@ function fromJSON(json) {
     console.log(input)
     data = [];
     for (let key in input) {
+        let weight = 
         if (input.hasOwnProperty(key))
             data.push({location: toLatLng(input[key].lat, input[key].lng), weight: input[key].count})
     }
