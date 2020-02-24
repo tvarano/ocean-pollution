@@ -11,7 +11,6 @@ function fromJSON(json) {
     console.log(input)
     data = [];
     for (let key in input) {
-        let weight = 
         if (input.hasOwnProperty(key))
             data.push({location: toLatLng(input[key].lat, input[key].lng), weight: input[key].count})
     }
