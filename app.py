@@ -4,26 +4,44 @@ from process import *
 
 app = Flask(__name__)
 
-
+# things to fix <3
+'''
+ok so heres what we have to do...
+the form is posting correctly, but it's not passing its args.
+i'm just using one big ol form to get all the data (you'll see it)
+but its not properly getting the data
+'''
 
 @app.route('/', methods=['GET', 'POST'])
 def home():
+    filt = {}
     if (request.method == 'POST'): 
-        print("POSTED")
-    print(request.args.get('filt'))
+        print("post")
+        for h in request.args: 
+            print(h)
+        print("uh")
+        for h in get_headers(): 
+            filt[arg] = request.args[h] == 'on'
+     
+    else:
+        print("get")
+        filt = {h: True for h in get_headers()}
+    
+
     month = request.args.get('month')
     year = request.args.get('year')
-    raw = analyze_dataset() if (month == 0 and year == 0) else analyze_month_data(month, year)
-    return render_template('index.html', filters=filters, month=month, year=year ,data=(json.dumps(raw)))
+    raw = analyze_dataset(get_active_headers(filt)) if (month == 0 and year == 0) else analyze_month_data(month, year, get_active_headers(filt))
+    return render_template('index.html', filters=filt, month=month, year=year ,data=(json.dumps(raw)))
 
 
 # def set_activity(activity): 
 #     for f in filters: 
 
+def get_active_headers(filt):
+    for f, a in enumerate(filt): 
+        if a:
+            yield f
 
-filters = {}
-for h in get_headers(): 
-    filters[h] = True
 
 if __name__ == "__main__":
    app.run(debug=True)

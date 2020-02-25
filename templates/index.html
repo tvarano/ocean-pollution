@@ -23,6 +23,11 @@
         <meta name="msapplication-TileColor" content="#FFFFFF">
         <meta name="msapplication-TileImage" content="/static/img/favicons/favicon-144.png">
         <meta name="msapplication-config" content="/browserconfig.xml">
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA3sUdLWg8NfWltFW3edZz9Yk2Q1yE5fxM&libraries=visualization"> </script>
+        <script src="static/js/map.js"></script>
+        <script src="static/js/navigation.js"></script>
     </head>
     <body>
         <header>
@@ -32,33 +37,37 @@
         <button id="open-options" onclick="openNav()">Open Options</button>
         <nav id="options">
             <h2>Options</h2>
-            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">Close</a>
-            <div>
+            <!-- <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">Close</a> -->
+            <button class="closebtn" onclick="closeNav()">Close</button>
                 <h3>Filters</h3>
-                <form id="filter-form">
-                    {% for key in filters %}
-                        <input type="checkbox" name="filt.{{key}}" checked="{{filters[key]}}"> {{key}}
-                        {% endfor %}
+                <form id="option-form" method="POST" action="/">
+                    {% for key, val in filters.items() %}
+                        {%+ if val %}
+                            <input type="checkbox" name="{{key}}" checked> {{key}}
+                        {% else %}
+                            <input type="checkbox" name="{{key}}"> {{key}}
+                        {% endif %}
+                        <!-- <input type="submit" value="Submit"> -->
+
+                    {% endfor %}
+                    <!-- <div id = "time-slider">
+                        <form action = "#" method = "post">
+                            <label for="slider"></label>
+                            <input id = "slider" type = "range" min = 0 max = 107 onchange= "evalSlider()"></input>
+                            <output id = "sliderVal"></output>
+                        </form>
+                    </div> -->
+                    <h2>Date</h2>
+                    <div id = "date-form-container">
+                        <p>Leave fields blank to show all information</p>
+                        <label for="month">Month:</label>
+                        <input type="integer" name="month" value="{{month}}"><br>
+                        <label for="year" value="{{year}}">Year:</label>
+                        <input type="text" name="year"><br><br>
+                    </div>
                     <input type="submit" value="Submit">
                 </form>
-            </div>
-            <div id = "time-slider">
-                <form action = "#" method = "post">
-                    <label for="slider"></label>
-                    <input id = "slider" type = "range" min = 0 max = 107 onchange= "evalSlider()"></input>
-                    <output id = "sliderVal"></output>
-                </form>
-            </div>
-            <div id = "date-form">
-                <p>Enter names in the fields, then click "Submit" to submit the form:</p>
-        
-                <form action="#" method=”POST”>
-                    <label for="month">Month:</label>
-                    <input type="integer" name="month"><br>
-                    <label for="year">Year:</label>
-                    <input type="text" name="year"><br><br>
-                    <input type="submit" value="Submit">
-                </form>
+                <!-- <button onclick="submitData()">Submit Filters</button> -->
                 <div id="floating-panel">
                     <button onclick="toggleHeatmap()">Toggle Heatmap</button>
                     <button onclick="changeGradient()">Change gradient</button>
@@ -72,9 +81,6 @@
             
             <div class="row">
                 <section id="map-container">
-                    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA3sUdLWg8NfWltFW3edZz9Yk2Q1yE5fxM&libraries=visualization"> </script>
-                    <script src="static/js/map.js"></script>
-                    <script src="static/js/navigation.js"></script>
                     <div id="map"></div>
                     
                     <script>

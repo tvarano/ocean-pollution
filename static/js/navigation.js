@@ -11,3 +11,11 @@ function openNav() {
     options.style.paddingLeft = "0"
     options.style.paddingRight = "0"
   }
+
+  function submitData() {
+    let filters = $('#option-form').serializeArray()
+    console.log(filters)
+    $.post( "/", function(data) {
+        console.log(data)
+    });
+  }
