@@ -12,10 +12,10 @@ function openNav() {
     options.style.paddingRight = "0"
   }
 
-  function submitData() {
-    let filters = $('#option-form').serializeArray()
-    console.log(filters)
-    $.post( "/", function(data) {
-        console.log(data)
-    });
-  }
+//   function submitData() {
+//     let filters = $('#option-form').serializeArray()
+//     console.log(filters)
+//     $.post( "/", function(data) {
+//         console.log(data)
+//     });
+//   }

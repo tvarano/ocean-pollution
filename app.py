@@ -16,12 +16,9 @@ but its not properly getting the data
 def home():
     filt = {}
     if (request.method == 'POST'): 
-        print("post")
-        for h in request.args: 
-            print(h)
-        print("uh")
         for h in get_headers(): 
-            filt[arg] = request.args[h] == 'on'
+            filt[h] = h in request.args
+            print(h, h in request.args)
      
     else:
         print("get")

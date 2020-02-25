@@ -65,7 +65,7 @@
                         <label for="year" value="{{year}}">Year:</label>
                         <input type="text" name="year"><br><br>
                     </div>
-                    <input type="submit" value="Submit">
+                    <input id="option-submit" type="submit" value="Submit">
                 </form>
                 <!-- <button onclick="submitData()">Submit Filters</button> -->
                 <div id="floating-panel">
@@ -93,7 +93,9 @@
             <div class="row">
                 <section id="analysis-container">
                     <h2>Analysis</h2>
-
+                    {{filters}}
+                    {{month}}
+                    {{year}}
                 </section>
             </div>
         </main>
