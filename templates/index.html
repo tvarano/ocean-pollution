@@ -25,35 +25,71 @@
         <meta name="msapplication-config" content="/browserconfig.xml">
     </head>
     <body>
-        <h1>Ocean Pollution Report</h1>
-        <h2>{{month}} / {{year}}</h2>
-        <section id="map-container">
-            <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA3sUdLWg8NfWltFW3edZz9Yk2Q1yE5fxM&libraries=visualization"> </script>
-            <script src="static/js/map.js"></script>
-            <div id="map"></div>
-            <div id=""></div>
-            <div id = "form">
+        <header>
+            <h1>Ocean Pollution Report</h1>
+            <h2>{{month}} / {{year}}</h2>
+        </header>
+        <button id="open-options" onclick="openNav()">Open Options</button>
+        <nav id="options">
+            <h2>Options</h2>
+            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">Close</a>
+            <div>
+                <h3>Filters</h3>
+                <form id="filter-form">
+                    {% for key in filters %}
+                        <input type="checkbox" name="filt.{{key}}" checked="{{filters[key]}}"> {{key}}
+                        {% endfor %}
+                    <input type="submit" value="Submit">
+                </form>
+            </div>
+            <div id = "time-slider">
+                <form action = "#" method = "post">
+                    <label for="slider"></label>
+                    <input id = "slider" type = "range" min = 0 max = 107 onchange= "evalSlider()"></input>
+                    <output id = "sliderVal"></output>
+                </form>
+            </div>
+            <div id = "date-form">
                 <p>Enter names in the fields, then click "Submit" to submit the form:</p>
-          
-                <form id="date-form" action="#" method=”POST”>
+        
+                <form action="#" method=”POST”>
                     <label for="month">Month:</label>
                     <input type="integer" name="month"><br>
                     <label for="year">Year:</label>
                     <input type="text" name="year"><br><br>
                     <input type="submit" value="Submit">
                 </form>
-          
-              </div>
-            <script>
-                fromJSON('{{ data }}')
-                initMap()
-            </script>
-        </section>
-        <section id="filter-container">
-
-        </section>
-        <section id="analysis-container">
+                <div id="floating-panel">
+                    <button onclick="toggleHeatmap()">Toggle Heatmap</button>
+                    <button onclick="changeGradient()">Change gradient</button>
+                    <button onclick="changeRadius()">Change radius</button>
+                    <button onclick="changeOpacity()">Change opacity</button>
+                </div>
+    
+            </div>
+        </nav>
+        <main>
             
-        </section>
+            <div class="row">
+                <section id="map-container">
+                    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA3sUdLWg8NfWltFW3edZz9Yk2Q1yE5fxM&libraries=visualization"> </script>
+                    <script src="static/js/map.js"></script>
+                    <script src="static/js/navigation.js"></script>
+                    <div id="map"></div>
+                    
+                    <script>
+                        fromJSON('{{ data }}')
+                        initMap()
+                    </script>
+                </section>
+            </div>
+            
+            <div class="row">
+                <section id="analysis-container">
+                    <h2>Analysis</h2>
+
+                </section>
+            </div>
+        </main>
     </body>
 </html>

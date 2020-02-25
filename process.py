@@ -139,7 +139,7 @@ def analyze_dataset_by_months(filters=headers):
 	conn.close()
 	return res
 
-def analyze_month_data(month, year, filters=headers):
+def analyze_month_data(month=None, year=None, filters=headers):
 	conn, curs = init()
 	
 	filters = [f for f in filters if f in head_nums]

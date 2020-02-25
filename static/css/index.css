@@ -1,9 +1,14 @@
+/* 
 
-/* Always set the map height explicitly to define the size of the div * element that contains the map. */
-#map { height: 100vh; }
-/* Optional: Makes the sample page fill the window. */
-html, body { height: 100%; margin: 0; padding: 0; }
-  
+#map-container {
+    height: 90vh;
+    width: 80vw;
+    float: left;
+}
+
+#map {
+    height: 100%;
+}
 body{
     background: #466368;
     border-radius:6px;
@@ -17,3 +22,62 @@ body{
   #date-form {
       background: white;
   }
+
+
+  #filter-container {
+      height: 90vh;
+  }
+
+  #analysis-container {
+      display: block;
+  } 
+  */
+
+
+  /* ok new stuff */
+
+body {
+background: #466368;
+
+}
+main {
+    display: block;
+    width: 100%;
+}
+.row {
+    display: block;
+}
+section {
+    vertical-align: top;
+    padding: 5px;
+}
+#options {
+    background: gray;
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 1;
+    top: 0; 
+    left: 0;
+    overflow-x: hidden;
+    padding-top: 60px; 
+    transition: 0.5s; 
+  
+}
+
+#filter-form input {
+    display: block;
+}
+
+#map-container {
+    height: 90vh;
+}
+
+#analysis-container {
+    background: white;
+}
+
+#map {
+    height: 100%;
+}
+

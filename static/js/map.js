@@ -8,13 +8,11 @@ function toLatLng(lat, lng) {
 
 function fromJSON(json) {
     let input = JSON.parse(json.replace(/&#34;/g, '"'))
-    console.log(input)
     data = [];
     for (let key in input) {
         if (input.hasOwnProperty(key))
             data.push({location: toLatLng(input[key].lat, input[key].lng), weight: input[key].count})
     }
-    console.log(data)
 }
 
 function initMap() {
