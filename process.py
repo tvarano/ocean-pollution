@@ -126,7 +126,7 @@ def analyze_dataset(filters=headers):
 	
 	rows = curs.execute(cmd)
 	ind = len(filters)
-	res = {r[ind]: {**analyze_row(r, filters), **{"lat": r[ind+1], "long": r[ind+2]}} for r in rows}
+	res = {r[ind]: {**analyze_row(r, filters), **{"Lat": r[ind+1], "Long": r[ind+2]}} for r in rows}
 
 	cmd =  sel_fil(filters, []) + " where Year >= 2010 and Year < 2020;"
 	row = [r for r in curs.execute(cmd)][0]

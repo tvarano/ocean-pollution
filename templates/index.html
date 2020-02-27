@@ -32,42 +32,32 @@
     <body>
         <header>
             <h1>Ocean Pollution Report</h1>
-            <h2>{{month}} / {{year}}</h2>
+            <h2 id="date-header">{{month}} / {{year}}</h2>
         </header>
         <button id="open-options" onclick="openNav()">Open Options</button>
         <nav id="options">
             <h2>Options</h2>
-            <!-- <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">Close</a> -->
             <button class="closebtn" onclick="closeNav()">Close</button>
                 <h3>Filters</h3>
-                <form id="option-form" method="POST" action="/">
+                <form id="option-form">
                     {% for key, val in filters.items() %}
                         {%+ if val %}
                             <input type="checkbox" name="{{key}}" checked> {{key}}
                         {% else %}
                             <input type="checkbox" name="{{key}}"> {{key}}
                         {% endif %}
-                        <!-- <input type="submit" value="Submit"> -->
 
                     {% endfor %}
-                    <!-- <div id = "time-slider">
-                        <form action = "#" method = "post">
-                            <label for="slider"></label>
-                            <input id = "slider" type = "range" min = 0 max = 107 onchange= "evalSlider()"></input>
-                            <output id = "sliderVal"></output>
-                        </form>
-                    </div> -->
                     <h2>Date</h2>
                     <div id = "date-form-container">
                         <p>Leave fields blank to show all information</p>
                         <label for="month">Month:</label>
                         <input type="integer" name="month" value="{{month}}"><br>
-                        <label for="year" value="{{year}}">Year:</label>
-                        <input type="text" name="year"><br><br>
+                        <label for="year">Year:</label>
+                        <input type="text" name="year" value="{{year}}"><br><br>
                     </div>
-                    <input id="option-submit" type="submit" value="Submit">
                 </form>
-                <!-- <button onclick="submitData()">Submit Filters</button> -->
+                <button id="option-submit" onclick="submitFilters()">Submit Filters</button>
                 <div id="floating-panel">
                     <button onclick="toggleHeatmap()">Toggle Heatmap</button>
                     <button onclick="changeGradient()">Change gradient</button>
@@ -84,7 +74,7 @@
                     <div id="map"></div>
                     
                     <script>
-                        fromJSON('{{ data }}')
+                        importFromJSON('{{ data }}')
                         initMap()
                     </script>
                 </section>

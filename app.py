@@ -12,32 +12,38 @@ i'm just using one big ol form to get all the data (you'll see it)
 but its not properly getting the data
 '''
 
-@app.route('/', methods=['GET', 'POST'])
+@app.route('/')
+def uh():
+    print("naughty")
+    return
+
+@app.route('/land', methods=['GET'])
 def home():
     filt = {}
-    if (request.method == 'POST'): 
-        for h in get_headers(): 
-            filt[h] = h in request.args
-            print(h, h in request.args)
-     
-    else:
-        print("get")
-        filt = {h: True for h in get_headers()}
-    
+    print("\n\nget\n\n")
+    # print(request)
+    filt = {h: True for h in get_headers()}
 
     month = request.args.get('month')
     year = request.args.get('year')
-    raw = analyze_dataset(get_active_headers(filt)) if (month == 0 and year == 0) else analyze_month_data(month, year, get_active_headers(filt))
-    return render_template('index.html', filters=filt, month=month, year=year ,data=(json.dumps(raw)))
+    raw = analyze_dataset(filters=filt)
+    return render_template('index.html', filters=filt, month=-1, year=-1, data=(json.dumps(raw)))
 
+
+@app.route('/query', methods=['POST'])
+def query(): 
+    filt = {h: h in request.form for h in get_headers()}
+    month = request.form['month']
+    year = request.form['year']
+    raw = analyze_month_data(month, year, get_active_headers(filt))
+    print(raw)
+    return json.dumps(raw)
 
 # def set_activity(activity): 
 #     for f in filters: 
 
 def get_active_headers(filt):
-    for f, a in enumerate(filt): 
-        if a:
-            yield f
+    return [k for k in filt if filt[k]]
 
 
 if __name__ == "__main__":

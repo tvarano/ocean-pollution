@@ -6,12 +6,16 @@ function toLatLng(lat, lng) {
     return new google.maps.LatLng(lat, lng);
 }
 
-function fromJSON(json) {
+function importFromJSON(json) {
     let input = JSON.parse(json.replace(/&#34;/g, '"'))
+    
+    console.log(`DATATATATATAT ${input['num_items']}`)
     data = [];
     for (let key in input) {
-        if (input.hasOwnProperty(key))
-            data.push({location: toLatLng(input[key].lat, input[key].lng), weight: input[key].count})
+        if (key != "null" && input.hasOwnProperty(key) && !isNum(input[key])) {
+            console.log(key)
+            data.push({location: toLatLng(input[key].Lat, input[key].Long), weight: input[key].lbs})
+        }
     }
 }
 
@@ -30,4 +34,9 @@ heatmap = new google.maps.visualization.HeatmapLayer({
   
 function toggleHeatmap() {
     heatmap.setMap(heatmap.getMap() ? null : map);
+}
+
+
+function isNum(n){
+    return Number(n) === n;
 }
