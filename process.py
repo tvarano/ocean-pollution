@@ -122,11 +122,15 @@ def analyze_dataset(filters=headers):
 	
 	filters = [f for f in filters if f in head_nums]
 	filters.append("Pounds")
+	cmd =  sel_fil(filters, ["Zone", "avg(lat)", "avg(long)"]) + " where Year >= 2010 and Year < 2020 group by Zone;"
+	
+	rows = curs.execute(cmd)
+	ind = len(filters)
+	res = {r[ind]: {**analyze_row(r, filters), **{"lat": r[ind+1], "long": r[ind+2]}} for r in rows}
+
 	cmd =  sel_fil(filters, []) + " where Year >= 2010 and Year < 2020;"
-	
 	row = [r for r in curs.execute(cmd)][0]
-	
-	res = analyze_row(row, filters)
+	res = {**res, **analyze_row(row, filters)}
 
 	conn.close()
 	return res
