@@ -103,9 +103,15 @@ def analyze_row(row, filters):
 	
 	res = {f:row[i] for i,f in enumerate(filters)}
 	res["num_items"] = cnt
+	res["lbs"] = lbs
+
 	res["lbs_mile"] = get_dense(lbs, mil)
 	res["lbs_person"] = get_dense(lbs, peo)
 	res["lbs_adult"] = get_dense(lbs, adu)
+
+	res["cnt_mile"] = get_dense(cnt, mil)
+	res["cnt_person"] = get_dense(cnt, peo)
+	res["cnt_adult"] = get_dense(cnt, adu)
 	
 	return res
 
@@ -139,7 +145,7 @@ def analyze_dataset_by_months(filters=headers):
 	conn.close()
 	return res
 
-def analyze_month_data(month=None, year=None, filters=headers):
+def analyze_month_data(month, year, filters=headers):
 	conn, curs = init()
 	
 	filters = [f for f in filters if f in head_nums]
@@ -150,6 +156,10 @@ def analyze_month_data(month=None, year=None, filters=headers):
 	ind = len(filters)
 	res = {r[ind]: {**analyze_row(r, filters), **{"Lat": r[ind+1], "Long": r[ind+2]}} for r in rows}
 
+	cmd = sel_fil(filters, []) + " where Month=? and Year=?;"
+	row = [r for r in curs.execute(cmd, (month, year))][0]
+	res = {**res, **analyze_row(row, filters)}
+	
 	conn.close()
 	return res
 
@@ -164,6 +174,12 @@ def analyze_zone_data(zone, filters=headers):
 	ind = len(filters)
 	res = {(r[ind], r[ind+1]): {**analyze_row(r, filters), **{"Lat": r[ind+2], "Long": r[ind+3]}} for r in rows}
 
+	cmd = sel_fil(filters, ["avg(Lat)", "avg(Long)"]) + " where Year >= 2010 and Year < 2020 and Zone=?"	
+	row = [r for r in curs.execute(cmd, (zone,))][0]
+	res = {**res, **analyze_row(row, filters)}
+	res["lat"] = row[ind]
+	res["long"] = row[ind+1]
+
 	conn.close()
 	return res
 
@@ -177,6 +193,12 @@ def analyze_zone_data_by_month(zone, month, year, filters=headers):
 	rows = curs.execute(cmd, (year, month, zone))
 	ind = len(filters)
 	res = {(r[ind], r[ind+1]): analyze_row(r, filters) for r in rows}
+
+	cmd = sel_fil(filters, ["Lat", "Long"]) + " where Year=? and Month=? and Zone=?"	
+	row = [r for r in curs.execute(cmd, (year, month, zone))][0]
+	res = {**res, **analyze_row(row, filters)}
+	res["lat"] = row[ind]
+	res["long"] = row[ind+1]
 
 	conn.close()
 	return res
