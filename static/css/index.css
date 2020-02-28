@@ -1,45 +1,7 @@
-/* 
-
-#map-container {
-    height: 90vh;
-    width: 80vw;
-    float: left;
-}
-
-#map {
-    height: 100%;
-}
-body{
-    background: #466368;
-    border-radius:6px;
-    height: 1000px;
-  }
-  
-  img{
-      margin-left: 32.5%;
-  }
-
-  #date-form {
-      background: white;
-  }
-
-
-  #filter-container {
-      height: 90vh;
-  }
-
-  #analysis-container {
-      display: block;
-  } 
-  */
-
-
-  /* ok new stuff */
-
 body {
-background: #466368;
-
+    background: #59bbcc;
 }
+
 main {
     display: block;
     width: 100%;
@@ -63,7 +25,7 @@ section {
     transition: 0.5s; 
 }
 
-#filter-form input {
+#option-form .checkbox-input {
     display: block;
 }
 
@@ -79,3 +41,12 @@ section {
     height: 100%;
 }
 
+/* gagues */
+.wrapper {
+    text-align:center;
+    top: 10px
+  }
+  .wrapper2 {
+    text-align:left;
+    top: 10px
+  }

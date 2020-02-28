@@ -1,6 +1,6 @@
 function openNav() {
     let options = document.getElementById("options");
-    options.style.width = "250px";
+    options.style.width = "400px";
     options.style.paddingLeft = "5px"
     options.style.paddingRight = "5px"
   }
@@ -14,6 +14,10 @@ function closeNav() {
 
 function submitFilters() {
     $.post("/query", $("#option-form").serializeArray(), function(data) {
-        console.log(data);
+        refreshPage(readDate(), data);
     });
+}
+
+function readDate() {
+    return {month: $("#month-input").val(), year: $("#year-input").val() }
 }

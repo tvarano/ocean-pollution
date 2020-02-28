@@ -4,20 +4,8 @@ from process import *
 
 app = Flask(__name__)
 
-# things to fix <3
-'''
-ok so heres what we have to do...
-the form is posting correctly, but it's not passing its args.
-i'm just using one big ol form to get all the data (you'll see it)
-but its not properly getting the data
-'''
 
-@app.route('/')
-def uh():
-    print("naughty")
-    return
-
-@app.route('/land', methods=['GET'])
+@app.route('/', methods=['GET'])
 def home():
     filt = {}
     print("\n\nget\n\n")

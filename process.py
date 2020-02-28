@@ -92,7 +92,6 @@ def analyze_row(row, filters):
 	lbs = 0
 	peo = 0
 	adu = 0
-
 	for i,f in enumerate(filters):
 		if f == "Pounds": lbs = row[i]
 		elif f == "Miles": mil = row[i]

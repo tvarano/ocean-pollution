@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Landing</title>
+        <title>UMD Data Challenge Pollution</title>
         <link href="static/css/index.css" rel="stylesheet">
         <link rel="shortcut icon" href="/static/img/favicons/favicon.ico">
         <link rel="icon" sizes="16x16 32x32 64x64" href="/static/img/favicons/favicon.ico">
@@ -28,11 +28,16 @@
         <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA3sUdLWg8NfWltFW3edZz9Yk2Q1yE5fxM&libraries=visualization"> </script>
         <script src="static/js/map.js"></script>
         <script src="static/js/navigation.js"></script>
+        <script src="static/js/page-management.js"></script>
     </head>
     <body>
         <header>
-            <h1>Ocean Pollution Report</h1>
-            <h2 id="date-header">{{month}} / {{year}}</h2>
+            <h1>Booz Allen Hamilton Ocean Pollution Report</h1>
+            {% if month == -1 %}
+                <h2 id="date-header">All Data</h2>
+            {% else %}
+                <h2 id="date-header">{{month}} / {{year}}</h2>
+            {% endif %}
         </header>
         <button id="open-options" onclick="openNav()">Open Options</button>
         <nav id="options">
@@ -42,9 +47,9 @@
                 <form id="option-form">
                     {% for key, val in filters.items() %}
                         {%+ if val %}
-                            <input type="checkbox" name="{{key}}" checked> {{key}}
+                            <div class="checkbox-input"> <input type="checkbox" name="{{key}}" checked> {{key}} </div>
                         {% else %}
-                            <input type="checkbox" name="{{key}}"> {{key}}
+                            <div class="checkbox-input"> <input type="checkbox" name="{{key}}"> {{key}} </div>
                         {% endif %}
 
                     {% endfor %}
@@ -52,9 +57,9 @@
                     <div id = "date-form-container">
                         <p>Leave fields blank to show all information</p>
                         <label for="month">Month:</label>
-                        <input type="integer" name="month" value="{{month}}"><br>
+                        <input id="month-input" type="integer" name="month" value="{{month}}"><br>
                         <label for="year">Year:</label>
-                        <input type="text" name="year" value="{{year}}"><br><br>
+                        <input id="year-input" type="text" name="year" value="{{year}}"><br><br>
                     </div>
                 </form>
                 <button id="option-submit" onclick="submitFilters()">Submit Filters</button>
@@ -83,11 +88,15 @@
             <div class="row">
                 <section id="analysis-container">
                     <h2>Analysis</h2>
-                    {{filters}}
-                    {{month}}
-                    {{year}}
+                    <div class="wrapper">
+                        <canvas id="gauge"></canvas>
+                      </div>
+                      <div class="wrapper2">
+                        <canvas id="gauge2"></canvas>
+                      </div>
                 </section>
             </div>
         </main>
+        <script>refreshPage()</script>
     </body>
 </html>
