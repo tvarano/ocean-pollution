@@ -94,18 +94,20 @@ def analyze_row(row, filters):
 	adu = 0
 
 	for i,f in enumerate(filters):
-		if row[i] == None: row[i] == 0
+		val = row[i]
+		if val == None: val = 0
 
-		if f == "Pounds": lbs = row[i]
-		elif f == "Miles": mil = row[i]
-		elif f == "People": peo = row[i]
-		elif f == "Adults": adu = row[i]
+		if f == "Pounds": lbs = val
+		elif f == "Miles": mil = val
+		elif f == "People": peo = val
+		elif f == "Adults": adu = val
 		elif f == "Children" or f=="_of_bags": continue
-		else: cnt += row[i]
+		else: cnt += val
 	
 	res = {f:row[i] for i,f in enumerate(filters)}
 	res["num_items"] = cnt
 	res["lbs"] = lbs
+	res["mils"] = mil
 
 	res["lbs_mile"] = get_dense(lbs, mil)
 	res["lbs_person"] = get_dense(lbs, peo)
@@ -252,6 +254,8 @@ if __name__ == '__main__':
 	print(analyze_month_data(5,2019), end="\n\n")
 	print(analyze_zone_data("Kings County, Brooklyn, NY, USA"), end="\n\n")
 	print(analyze_zone_data_by_month("Kings County, Brooklyn, NY, USA", 5, 2019), end="\n\n")
+
+	print(analyze_month_data(1,2011), end="\n\n")
 	#print(analyze_dataset(), end="\n\n")
 	#print(analyze_dataset(), end="\n\n")
 	#print(get_data(), end="\n\n")
