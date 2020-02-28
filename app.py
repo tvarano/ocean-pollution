@@ -8,14 +8,14 @@ app = Flask(__name__)
 @app.route('/', methods=['GET'])
 def home():
     filt = {}
-    print("\n\nget\n\n")
-    # print(request)
+    print("get called")
     filt = {h: True for h in get_headers()}
 
     month = request.args.get('month')
     year = request.args.get('year')
     raw = analyze_dataset(filters=filt)
-    return render_template('index.html', filters=filt, month=-1, year=-1, data=(json.dumps(raw)))
+    zones = [k for k in raw if k != None and k.endswith("USA")]
+    return render_template('index.html', filters=filt, month=-1, year=-1, data=(json.dumps(raw)), zones=zones)
 
 
 @app.route('/query', methods=['POST'])
@@ -27,8 +27,14 @@ def query():
     print(raw)
     return json.dumps(raw)
 
-# def set_activity(activity): 
-#     for f in filters: 
+@app.route('/zone', methods=['POST'])
+def zone(): 
+    if (request.form['date[month]'] == -1):
+        raw = analyze_zone_data(zone=request.form['zone'])
+    else:
+        raw = analyze_zone_data_by_month(zone=request.form['zone'], month=request.form['date[month]'], year=request.form['date[year]'])
+    print(raw)
+    return json.dumps(raw)
 
 def get_active_headers(filt):
     return [k for k in filt if filt[k]]

@@ -1,16 +1,46 @@
 function refreshPage(date, data) {
-    console.log(`month:`)
-    $("#date-header")[0].innerHTML = `${date.month} / ${date.year}`;
+    if (date.month == -1) 
+        $("#date-header")[0].innerHTML = 'All Data';
+    else 
+        $("#date-header")[0].innerHTML = `${date.month} / ${date.year}`;
     importFromJSON(data);
     initMap();
 
-    setAnalysis();
+    refreshAnalysis(date)
+    $('#load').hide();
     closeNav();
 }
 
-function setAnalysis() {
+function refreshAnalysis(date) {
+    if (!date)
+        date = readDate()
+    $.post("/zone", zoneFilters(date), function(data) {
+        let meas = $('input[name="measurement"]:checked').val();
+        console.log(meas)
+        if (data)
+            setAnalysis(meas, data);
+    });
+}
+
+function zoneFilters(date) {
+    let zone = $("#zone-selection option:selected" ).text();
+
+    return {date: date, zone:zone}
+
+}
+
+function setAnalysis(meas, data) {
     //find min, max
-    // 
+    if (meas == 'Pounds') {
+        radialLaunch(0, 100, data["lbs_mile"], "lbs / mile", "per-mile")
+        radialLaunch(0, 100, data["lbs_person"], "lbs / person", "per-person")
+        radialLaunch(0, 100, data["lbs_adult"], "lbs / adult", "per-adult")
+    } else {
+        radialLaunch(0, 100, data["cnt_mile"], "items / mile", "per-mile")
+        radialLaunch(0, 100, data["cnt_person"], "items / person", "per-person")
+        radialLaunch(0, 100, data["cnt_adult"], "items / adult", "per-adult")
+    }
+    console.log(data)
 }
 
 
