@@ -48,7 +48,7 @@ function setAvailableZones(data) {
     const dropdown = $('#zone-selection')
     dropdown.empty()
     for (const key of Object.keys(data)) {
-        console.log(dropdown)
+        //console.log(dropdown)
         if (key.endsWith("USA"))
             dropdown.append(`<option value=\'${key}\'>${key}</option>`)
     }
@@ -56,6 +56,7 @@ function setAvailableZones(data) {
 
 function zoneFilters(date) {
     let zone = $("#zone-selection option:selected" ).text();
+	console.log(date["month"])
     return {date: date, zone:zone, filters:JSON.stringify(activeFilters)}
 
 }
@@ -63,7 +64,7 @@ function zoneFilters(date) {
 function setAnalysis(meas, data) {
     //find min, max
     var size = 300;
-    if (meas == 'Pounds') {
+    if (meas == 'lbs') {
         radialLaunch(0, 100, data["lbs_mile"],size,"lbs / mile", "per-mile")
         radialLaunch(0, 100, data["lbs_person"],size, "lbs / person", "per-person")
         radialLaunch(0, 100, data["lbs_adult"],size, "lbs / adult", "per-adult")
@@ -142,6 +143,6 @@ function radialLaunch(min, max, value,size,units, renderTo){
       gauge.value = value;
       
       // Update the declarative chart...
-      document.getElementById("gauge").setAttribute("data-value", value);
+      document.getElementById(renderTo).setAttribute("data-value", value);
     }, 1800);
 }
