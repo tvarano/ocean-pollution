@@ -94,6 +94,8 @@ def analyze_row(row, filters):
 	adu = 0
 
 	for i,f in enumerate(filters):
+		if row[i] == None: row[i] == 0
+
 		if f == "Pounds": lbs = row[i]
 		elif f == "Miles": mil = row[i]
 		elif f == "People": peo = row[i]
