@@ -254,11 +254,11 @@ def get_zone_data(zone, month=None, year=None):
 if __name__ == '__main__':
 	print(analyze_dataset(), end="\n\n")
 	print(analyze_dataset_by_months(), end="\n\n")
-	print(analyze_month_data(5,2019), end="\n\n")
-	print(analyze_zone_data("Kings County, Brooklyn, NY, USA"), end="\n\n")
-	print(analyze_zone_data_by_month("Kings County, Brooklyn, NY, USA", 5, 2019), end="\n\n")
+	#print(analyze_month_data(5,2018), end="\n\n")
+	#print(analyze_zone_data("Kings County, Brooklyn, NY, USA"), end="\n\n")
+	print(analyze_zone_data_by_month("Prince George's County, MD, USA", 5, 2018), end="\n\n")
 
-	print(analyze_month_data(1,2011), end="\n\n")
+	#print(analyze_month_data(1,2011), end="\n\n")
 	#print(analyze_dataset(), end="\n\n")
 	#print(analyze_dataset(), end="\n\n")
 	#print(get_data(), end="\n\n")
