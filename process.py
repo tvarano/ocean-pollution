@@ -93,7 +93,7 @@ def analyze_row(row, filters):
 	peo = 0
 	adu = 0
 	res = {}
-	
+
 	for i,f in enumerate(filters):
 		val = row[i]
 		if val == None: val = 0

@@ -11,13 +11,3 @@ function closeNav() {
     options.style.paddingLeft = "0"
     options.style.paddingRight = "0"
 }
-
-function submitFilters() {
-    $.post("/query", $("#option-form").serializeArray(), function(data) {
-        refreshPage(readDate(), data);
-    });
-}
-
-function readDate() {
-    return {month: $("#month-input").val(), year: $("#year-input").val() }
-}

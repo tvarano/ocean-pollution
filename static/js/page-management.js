@@ -1,10 +1,33 @@
-function refreshPage(date, data) {
+let activeFilters = [];
+
+function setInitialFilters() {
+    setFilters($("#option-form").serializeArray());
+}
+
+function setFilters(filts) {
+    activeFilters = [];
+    filts.forEach((f) => {
+        if (f.value == 'on')
+        activeFilters.push(f.name);
+    })
+}
+
+function submitFilters() {
+    $.post("/query", $("#option-form").serializeArray(), function(data) {
+        refreshPage(readDate(), data);
+    });
+}
+
+function refreshPage(date, raw) {
     if (date.month == -1) 
         $("#date-header")[0].innerHTML = 'All Data';
     else 
         $("#date-header")[0].innerHTML = `${date.month} / ${date.year}`;
-    importFromJSON(data);
+    let data = JSON.parse(raw.replace(/&#34;/g, '"'))
+
+    importMapData(data);
     initMap();
+    setAvailableZones(data)
 
     refreshAnalysis(date)
     $('#load').hide();
@@ -16,16 +39,24 @@ function refreshAnalysis(date) {
         date = readDate()
     $.post("/zone", zoneFilters(date), function(data) {
         let meas = $('input[name="measurement"]:checked').val();
-        console.log(meas)
-        if (data)
-            setAnalysis(meas, data);
+        // if (data)
+            // setAnalysis(meas, data);
     });
+}
+
+function setAvailableZones(data) {
+    const dropdown = $('#zone-selection')
+    dropdown.empty()
+    for (const key of Object.keys(data)) {
+        console.log(dropdown)
+        if (key.endsWith("USA"))
+            dropdown.append(`<option value=\'${key}\'>${key}</option>`)
+    }
 }
 
 function zoneFilters(date) {
     let zone = $("#zone-selection option:selected" ).text();
-
-    return {date: date, zone:zone}
+    return {date: date, zone:zone, filters:JSON.stringify(activeFilters)}
 
 }
 
@@ -40,7 +71,11 @@ function setAnalysis(meas, data) {
         radialLaunch(0, 100, data["cnt_person"], "items / person", "per-person")
         radialLaunch(0, 100, data["cnt_adult"], "items / adult", "per-adult")
     }
-    console.log(data)
+}
+
+
+function readDate() {
+    return {month: $("#month-input").val(), year: $("#year-input").val() }
 }
 
 

@@ -6,9 +6,7 @@ function toLatLng(lat, lng) {
     return new google.maps.LatLng(lat, lng);
 }
 
-function importFromJSON(json) {
-    let input = JSON.parse(json.replace(/&#34;/g, '"'))
-    
+function importMapData(input) {
     data = [];
     for (let key in input) {
         if (key != "null" && input.hasOwnProperty(key) && !isNum(input[key])) {

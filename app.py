@@ -24,15 +24,15 @@ def query():
     month = request.form['month']
     year = request.form['year']
     raw = analyze_month_data(month, year, get_active_headers(filt))
-    print(raw)
     return json.dumps(raw)
 
 @app.route('/zone', methods=['POST'])
 def zone(): 
+    filt = json.loads(request.form['filters'])
     if (request.form['date[month]'] == -1):
-        raw = analyze_zone_data(zone=request.form['zone'])
+        raw = analyze_zone_data(zone=request.form['zone'], filters=filt)
     else:
-        raw = analyze_zone_data_by_month(zone=request.form['zone'], month=request.form['date[month]'], year=request.form['date[year]'])
+        raw = analyze_zone_data_by_month(zone=request.form['zone'], month=request.form['date[month]'], year=request.form['date[year]'], filters=filt)
     print(raw)
     return json.dumps(raw)
 
