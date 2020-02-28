@@ -39,8 +39,8 @@ function refreshAnalysis(date) {
         date = readDate()
     $.post("/zone", zoneFilters(date), function(data) {
         let meas = $('input[name="measurement"]:checked').val();
-        // if (data)
-            // setAnalysis(meas, data);
+         if (data)
+             setAnalysis(meas, data);
     });
 }
 
