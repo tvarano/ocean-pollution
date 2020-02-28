@@ -1,6 +1,6 @@
 import sqlite3 as sql
 
-get_dense = lambda p, d: None if d == 0 else p/d
+get_dense = lambda p, d: 0 if d == 0 else p/d
 
 headers = [
 	#"Cleanup_ID", 	
