@@ -257,7 +257,7 @@ if __name__ == '__main__':
 	#print(analyze_month_data(5,2018), end="\n\n")
 	#print(analyze_zone_data("Kings County, Brooklyn, NY, USA"), end="\n\n")
 	print(analyze_zone_data_by_month("Prince George's County, MD, USA", 5, 2018), end="\n\n")
-
+	print(analyze_zone_data("Prince George's County, MD, USA"), end="\n\n")
 	#print(analyze_month_data(1,2011), end="\n\n")
 	#print(analyze_dataset(), end="\n\n")
 	#print(analyze_dataset(), end="\n\n")
