@@ -9,11 +9,9 @@ function toLatLng(lat, lng) {
 function importFromJSON(json) {
     let input = JSON.parse(json.replace(/&#34;/g, '"'))
     
-    console.log(`DATATATATATAT ${input['num_items']}`)
     data = [];
     for (let key in input) {
         if (key != "null" && input.hasOwnProperty(key) && !isNum(input[key])) {
-            console.log(key)
             data.push({location: toLatLng(input[key].Lat, input[key].Long), weight: input[key].lbs})
         }
     }
@@ -21,8 +19,8 @@ function importFromJSON(json) {
 
 function initMap() {
     map = new google.maps.Map(document.getElementById('map'), {
-    zoom: 13,
-    center: {lat: 40, lng: -75.146},
+    zoom: 4,
+    center: {lat: 39.834508, lng:  -97.972085},
     mapTypeId: 'satellite'
 });
 

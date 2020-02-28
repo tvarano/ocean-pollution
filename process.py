@@ -92,8 +92,8 @@ def analyze_row(row, filters):
 	lbs = 0
 	peo = 0
 	adu = 0
-
 	res = {}
+	
 	for i,f in enumerate(filters):
 		val = row[i]
 		if val == None: val = 0

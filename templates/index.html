@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Landing</title>
+        <title>UMD Data Challenge Pollution</title>
         <link href="static/css/index.css" rel="stylesheet">
         <link rel="shortcut icon" href="/static/img/favicons/favicon.ico">
         <link rel="icon" sizes="16x16 32x32 64x64" href="/static/img/favicons/favicon.ico">
@@ -23,16 +23,11 @@
         <meta name="msapplication-TileColor" content="#FFFFFF">
         <meta name="msapplication-TileImage" content="/static/img/favicons/favicon-144.png">
         <meta name="msapplication-config" content="/browserconfig.xml">
-
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA3sUdLWg8NfWltFW3edZz9Yk2Q1yE5fxM&libraries=visualization"> </script>
-        <script src="static/js/map.js"></script>
-        <script src="static/js/navigation.js"></script>
     </head>
     <body>
         <header>
-            <h1>Ocean Pollution Report</h1>
-            <h2 id="date-header">{{month}} / {{year}}</h2>
+            <h1>Booz Allen Hamilton Ocean Pollution Report</h1>
+                <h2 id="date-header">Date</h2>
         </header>
         <button id="open-options" onclick="openNav()">Open Options</button>
         <nav id="options">
@@ -42,9 +37,9 @@
                 <form id="option-form">
                     {% for key, val in filters.items() %}
                         {%+ if val %}
-                            <input type="checkbox" name="{{key}}" checked> {{key}}
+                            <div class="checkbox-input"> <input type="checkbox" name="{{key}}" checked> {{key}} </div>
                         {% else %}
-                            <input type="checkbox" name="{{key}}"> {{key}}
+                            <div class="checkbox-input"> <input type="checkbox" name="{{key}}"> {{key}} </div>
                         {% endif %}
 
                     {% endfor %}
@@ -52,42 +47,59 @@
                     <div id = "date-form-container">
                         <p>Leave fields blank to show all information</p>
                         <label for="month">Month:</label>
-                        <input type="integer" name="month" value="{{month}}"><br>
+                        <input id="month-input" type="integer" name="month" value="{{month}}"><br>
                         <label for="year">Year:</label>
-                        <input type="text" name="year" value="{{year}}"><br><br>
+                        <input id="year-input" type="text" name="year" value="{{year}}"><br><br>
                     </div>
                 </form>
                 <button id="option-submit" onclick="submitFilters()">Submit Filters</button>
-                <div id="floating-panel">
-                    <button onclick="toggleHeatmap()">Toggle Heatmap</button>
-                    <button onclick="changeGradient()">Change gradient</button>
-                    <button onclick="changeRadius()">Change radius</button>
-                    <button onclick="changeOpacity()">Change opacity</button>
-                </div>
-    
             </div>
         </nav>
         <main>
             
             <div class="row">
                 <section id="map-container">
+                    <h1 id="load">Loading...</h1>
                     <div id="map"></div>
-                    
-                    <script>
-                        importFromJSON('{{ data }}')
-                        initMap()
-                    </script>
                 </section>
             </div>
             
             <div class="row">
                 <section id="analysis-container">
+                    <div>
+                        <form id="gauge-filters">
+                            <h3>Pollution Measurement</h3>
+                            <input type="radio" id="lbs" name="measurement" value="lbs" checked>
+                            <label for="lbs">Pounds</label><br>
+                            <input type="radio" id="cnt" name="measurement" value="cnt">
+                            <label for="cnt">Number of Items</label>
+                        </form>
+                        <select id="zone-selection">
+                            {% for key in zones %}
+                                <option value="{{key}}">{{key}}</option>
+                            {% endfor %}
+                        </select>
+                        <button onclick='refreshAnalysis()'>Apply Filters</button>
+                    </div>
                     <h2>Analysis</h2>
-                    {{filters}}
-                    {{month}}
-                    {{year}}
+                    <div class="gauge-wrap">
+                        <canvas id="per-mile"></canvas>
+                    </div>
+                    <div class="gauge-wrap">
+                        <canvas id="per-person"></canvas>
+                    </div>
+                    <div class="gauge-wrap">
+                        <canvas id="per-adult"></canvas>
+                    </div>
                 </section>
             </div>
         </main>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA3sUdLWg8NfWltFW3edZz9Yk2Q1yE5fxM&libraries=visualization"> </script>
+        <script src="https://cdn.rawgit.com/Mikhus/canvas-gauges/gh-pages/download/2.1.5/radial/gauge.min.js"></script>
+        <script src="static/js/map.js"></script>
+        <script src="static/js/navigation.js"></script>
+        <script src="static/js/page-management.js"></script>
+        <script>refreshPage({month:-1, year:-1}, "{{ data }}")</script>
     </body>
 </html>
