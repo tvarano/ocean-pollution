@@ -62,14 +62,15 @@ function zoneFilters(date) {
 
 function setAnalysis(meas, data) {
     //find min, max
+    var size = 300;
     if (meas == 'Pounds') {
-        radialLaunch(0, 100, data["lbs_mile"], "lbs / mile", "per-mile")
-        radialLaunch(0, 100, data["lbs_person"], "lbs / person", "per-person")
-        radialLaunch(0, 100, data["lbs_adult"], "lbs / adult", "per-adult")
+        radialLaunch(0, 100, data["lbs_mile"],size,"lbs / mile", "per-mile")
+        radialLaunch(0, 100, data["lbs_person"],size, "lbs / person", "per-person")
+        radialLaunch(0, 100, data["lbs_adult"],size, "lbs / adult", "per-adult")
     } else {
-        radialLaunch(0, 100, data["cnt_mile"], "items / mile", "per-mile")
-        radialLaunch(0, 100, data["cnt_person"], "items / person", "per-person")
-        radialLaunch(0, 100, data["cnt_adult"], "items / adult", "per-adult")
+        radialLaunch(0, 100, data["cnt_mile"],size, "items / mile", "per-mile")
+        radialLaunch(0, 100, data["cnt_person"],size, "items / person", "per-person")
+        radialLaunch(0, 100, data["cnt_adult"],size, "items / adult", "per-adult")
     }
 }
 

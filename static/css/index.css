@@ -41,12 +41,12 @@ section {
     height: 100%;
 }
 
-/* gagues */
-/* .wrapper {
-    text-align:center;
-    top: 10px
-  }
-  .wrapper2 {
-    text-align:left;
-    top: 10px
-  } */
+.gauge-wrapper {
+    display: table;
+    width: 100%; 
+    table-layout: fixed; 
+    border-spacing: 10px; 
+}
+.gauge{
+    display: table-cell; 
+}

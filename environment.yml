@@ -1,0 +1,7 @@
+name: ocean-pollution
+channels:
+    - conda-forge
+    - defaults
+dependencies:
+    - flask
+    - sqlite
