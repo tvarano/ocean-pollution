@@ -93,6 +93,7 @@ def analyze_row(row, filters):
 	peo = 0
 	adu = 0
 
+	res = {}
 	for i,f in enumerate(filters):
 		val = row[i]
 		if val == None: val = 0
@@ -104,7 +105,9 @@ def analyze_row(row, filters):
 		elif f == "Children" or f=="_of_bags": continue
 		else: cnt += val
 	
-	res = {f:row[i] for i,f in enumerate(filters)}
+		res[f] = val
+
+	#res = {f:(row[i], 0)[row[i] == None] for i,f in enumerate(filters)}
 	res["num_items"] = cnt
 	res["lbs"] = lbs
 	res["mils"] = mil
