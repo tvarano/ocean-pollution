@@ -38,8 +38,10 @@ function refreshAnalysis(date) {
     if (!date)
         date = readDate()
     $.post("/zone", zoneFilters(date), function(data) {
+		//console.log(data)
         let meas = $('input[name="measurement"]:checked').val();
-         if (data)
+        console.log(meas)
+		if (data)
              setAnalysis(meas, data);
     });
 }
@@ -56,15 +58,18 @@ function setAvailableZones(data) {
 
 function zoneFilters(date) {
     let zone = $("#zone-selection option:selected" ).text();
-	console.log(date["month"])
-    return {date: date, zone:zone, filters:JSON.stringify(activeFilters)}
+    return {"month": date["month"], "year": date["year"], zone:zone, filters:JSON.stringify(activeFilters)}
 
 }
 
 function setAnalysis(meas, data) {
     //find min, max
     var size = 300;
+	//console.log(meas);
+	data = JSON.parse(data);
+	console.log(data["lbs_mile"]);
     if (meas == 'lbs') {
+		console.log(data["lbs_mile"])
         radialLaunch(0, 100, data["lbs_mile"],size,"lbs / mile", "per-mile")
         radialLaunch(0, 100, data["lbs_person"],size, "lbs / person", "per-person")
         radialLaunch(0, 100, data["lbs_adult"],size, "lbs / adult", "per-adult")
