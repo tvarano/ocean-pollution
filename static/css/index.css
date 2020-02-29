@@ -1,0 +1,52 @@
+body {
+    background: #59bbcc;
+}
+
+main {
+    display: block;
+    width: 100%;
+}
+.row {
+    display: block;
+}
+section {
+    vertical-align: top;
+    padding: 5px;
+}
+#options {
+    background: gray;
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 1;
+    top: 0; 
+    left: 0;
+    overflow-x: hidden;
+    transition: 0.5s; 
+}
+
+#option-form .checkbox-input {
+    display: block;
+}
+
+#map-container {
+    height: 90vh;
+}
+
+#analysis-container {
+    background: white;
+}
+
+#map {
+    height: 100%;
+}
+
+.gauge-wrapper {
+    display: table;
+    width: 100%; 
+    table-layout: fixed; 
+    border-spacing: 10px; 
+}
+.gauge{
+    display: table-cell; 
+}
