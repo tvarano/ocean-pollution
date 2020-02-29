@@ -74,7 +74,7 @@ function setAnalysis(meas, data) {
         radialLaunch(0, 33, data["lbs_person"],size, "lbs / person", "per-person")
         //radialLaunch(0, 100, data["lbs_adult"],size, "lbs / adult", "per-adult")
     } else {
-        radialLaunch(0, 1006, data["cnt"],size, "items", "per")
+        radialLaunch(0, 1006, data["num_items"],size, "items", "per")
         radialLaunch(0, 720, data["cnt_mile"],size, "items / mile", "per-mile")
         radialLaunch(0, 53, data["cnt_person"],size, "items / person", "per-person")
         //radialLaunch(0, 100, data["cnt_adult"],size, "items / adult", "per-adult")
