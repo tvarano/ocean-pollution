@@ -29,7 +29,9 @@ function refreshPage(date, raw) {
     initMap();
     setAvailableZones(data)
 
-    refreshAnalysis(date)
+    let meas = $('input[name="measurement"]:checked').val();
+    setAnalysis(meas, data);
+    //refreshAnalysis(date)
     $('#load').hide();
     closeNav();
 }
@@ -66,8 +68,9 @@ function setAnalysis(meas, data) {
     //find min, max
     var size = 300;
 	//console.log(meas);
-	data = JSON.parse(data);
-	console.log(data["lbs_mile"]);
+    
+    if (typeof data == "string") data = JSON.parse(data);
+    console.log(data["lbs_mile"]);
     if (meas == 'lbs') {
         radialLaunch(0, 616, data["lbs"],size, "lbs", "per")
         radialLaunch(0, 440, data["lbs_mile"],size,"lbs / mile", "per-mile")
