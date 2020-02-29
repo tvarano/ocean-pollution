@@ -21,7 +21,7 @@ This website shows the success of ocean cleanup efforts and allows users to sele
 
 To see the site: 
 
-'git clone git@github.com:tvarano/ocean-pollution.git'
+`git clone git@github.com:tvarano/ocean-pollution.git`
 
 `conda env create -f enviroment.yml` 
 
