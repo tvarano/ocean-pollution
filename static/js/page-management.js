@@ -69,14 +69,15 @@ function setAnalysis(meas, data) {
 	data = JSON.parse(data);
 	console.log(data["lbs_mile"]);
     if (meas == 'lbs') {
-		console.log(data["lbs_mile"])
-        radialLaunch(0, 100, data["lbs_mile"],size,"lbs / mile", "per-mile")
-        radialLaunch(0, 100, data["lbs_person"],size, "lbs / person", "per-person")
-        radialLaunch(0, 100, data["lbs_adult"],size, "lbs / adult", "per-adult")
+        radialLaunch(0, 616, data["lbs"],size, "lbs", "per")
+        radialLaunch(0, 440, data["lbs_mile"],size,"lbs / mile", "per-mile")
+        radialLaunch(0, 33, data["lbs_person"],size, "lbs / person", "per-person")
+        //radialLaunch(0, 100, data["lbs_adult"],size, "lbs / adult", "per-adult")
     } else {
-        radialLaunch(0, 100, data["cnt_mile"],size, "items / mile", "per-mile")
-        radialLaunch(0, 100, data["cnt_person"],size, "items / person", "per-person")
-        radialLaunch(0, 100, data["cnt_adult"],size, "items / adult", "per-adult")
+        radialLaunch(0, 1006, data["cnt"],size, "items", "per")
+        radialLaunch(0, 720, data["cnt_mile"],size, "items / mile", "per-mile")
+        radialLaunch(0, 53, data["cnt_person"],size, "items / person", "per-person")
+        //radialLaunch(0, 100, data["cnt_adult"],size, "items / adult", "per-adult")
     }
 }
 
